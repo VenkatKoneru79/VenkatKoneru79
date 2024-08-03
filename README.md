@@ -1,147 +1,96 @@
-import numpy as np
-import pandas as pd 
-import matplotlib.pyplot as plt 
-import seaborn as sns 
-import plotly.express as px
-from sklearn.preprocessing import StandardScaler,MinMaxScaler
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import f1_score,confusion_matrix,accuracy_score
-data = pd.read_csv("weather_classification_data.csv")
-data
-print(data.isna().sum())
-print(data.duplicated().sum())
-print(data.info())
+                                                Authors: Venkat Koneru and Tharun Reddy
+                                                
+# Weather Prediction
+
+This project leverages machine learning algorithms to forecast weather conditions. By analyzing historical weather data we predict the future trends in the weather. Our goal is to provide reliable and actionable weather forecasts to help individuals and organizations make informed decisions. 
+
+## Process Overview
+
+#### Data Inspection and Cleaning: 
+Checked for missing values, duplicates, and inspected data types and unique values.
+
+#### Reordering Columns: 
+Reordered the columns for better organization and readability.
+
+#### Data Visualization:
+Plotted histograms and box plots for numeric features to understand their distributions.
+Created count plots for categorical features to visualize their frequency distributions.
+Target Analysis: Analyzed the features with respect to the target variable using count plots and box plots.
+
+#### One-Hot Encoding and Factorizing: 
+Applied one-hot encoding to categorical features and factorized the target variable for numerical representation.
+
+#### Correlation Analysis: 
+Generated a correlation matrix to understand the relationships between features.
+
+#### Data Splitting: 
+Split the dataset into training and testing sets to evaluate model performance.
+
+#### Feature Scaling: 
+Applied MinMaxScaler to normalize the feature values for better model performance.
+
+#### Model Implementation:
+Trained multiple models including Logistic Regression, Decision Tree Classifier, Random Forest Classifier, and Support Vector Machine (SVM).
+Predicted the target variable using the trained models and evaluated their accuracy. 
+
+#### Hyperparameter Tuning: 
+Used GridSearchCV to perform hyperparameter tuning for each model to find the best parameters and improve model performance.
+ 
+Following this structured process, we aim to develop models for weather prediction. Alongside, leveraging hyperparameter tuning and comparative analysis to achieve optimal performance and reliability.
 
 
-print(data["Weather Type"].unique())
-print(data.describe()) 
+# EDA
+[Kaggle](https://www.kaggle.com/datasets/nikhil7280/weather-type-classification/data)
 
-# data.columns
-new_order  = ['Temperature', 'Humidity', 'Wind Speed', 'Precipitation (%)', 'Atmospheric Pressure', 'UV Index','Visibility (km)','Cloud Cover', 'Season', 'Location', 'Weather Type']
-data = data[new_order]
+#### Dataset Description
+This dataset is synthetically generated to mimic weather data for classification tasks. It has 13200 samples and 11 columns
+##### Attributes
+Temperature (numeric): The temperature in degrees Celsius, ranging from extreme cold to extreme heat.
+Humidity (numeric): The humidity percentage, including values above 100% to introduce outliers.
+Wind Speed (numeric): The wind speed in kilometers per hour, with a range including unrealistically high values.
+Precipitation (%) (numeric): The precipitation percentage, including outlier values.
+Cloud Cover (categorical): The cloud cover description.
+Atmospheric Pressure (numeric): The atmospheric pressure in hPa, covering a wide range.
+UV Index (numeric): The UV index, indicating the strength of ultraviolet radiation.
+Season (categorical): The season during which the data was recorded.
+Visibility (km) (numeric): The visibility in kilometers, including very low or very high values.
+Location (categorical): The type of location where the data was recorded.
 
-data
-
-def Plot_1(data, col):
-    plt.figure(figsize=(8, 4))
     
-    plt.subplot(1, 2, 1)
-    plt.hist(data[col], bins=10, edgecolor='black',color= 'skyblue')
-    plt.title(f'{col} Distribution')
-    
-    plt.subplot(1, 2, 2)
-    plt.boxplot(data[col])
-    plt.title(f'{col} BoxPlot')
-    
-    plt.tight_layout()
-    plt.show()
-    
-for i in range(4):
-    Plot_1(data, data.columns[i])
+Output/y: Weather Type (categorical) -> The target variable for classification, indicating the weather type.
 
-def Plot_2(data, col):
-
-    palette = sns.color_palette("Set2", len(data[col].unique()))
-    count = sns.countplot(data=data, x=col, order=data[col].value_counts().index,palette= palette)
-    total = len(data)
-    
-    for p in count.patches:
-        percentage = '{:.1f}%'.format(100 * p.get_height() / total)
-        count.annotate(percentage, (p.get_x() + p.get_width() / 2., p.get_height()), ha='center', va='bottom')
-
-    plt.show()
-
-for i in range(-4,-1):
-    Plot_2(data,data.columns[i])
-target = data["Weather Type"]
-
-def Plot_3(data, col):
-    if data[col].dtype == 'object':
-        plt.figure(figsize=(10, 6))
-        sns.countplot(data=data, x=col, hue=target, palette='hot', order=data[col].value_counts().index)
-        plt.title(f'Count Plot of {col}')
-        plt.show()
-    else:
-        plt.figure(figsize=(6, 4))
-        sns.boxplot(data=data, x=target, y=col, palette='hot')
-        plt.title(f'Box Plot of {col}')
-        plt.show()
-
-# Example usage
-Plot_3(data, 'Temperature')
-
-sns.pairplot(data = data,
-             hue = "Weather Type")
-data_1 = data
-
-data_1['Cloud Cover'] = pd.factorize(data_1["Cloud Cover"])[0] + 1
-data_1['Season'] = pd.factorize(data_1['Season'])[0] +1
-data_1['Location'] = pd.factorize(data_1['Location'])[0] +1
-data_1['Weather Type'] = pd.factorize(data_1["Weather Type"])[0] +1
-
-data_1
-correlation= data_1.iloc[:,0:10].corr()
-fig = px.imshow(correlation,
-                text_auto = True,
-                aspect = "auto",
-                color_continuous_scale='YlOrRd',
-                title='Correlation Matrix')
-
-fig.update_layout(xaxis = dict(tickangle = -45),width = 1000,height = 700)
-fig.show()
-### Train test split operation 
-X = data_1.iloc[:,0:10]
-y = data_1.iloc[:,-1]
-
-X_train,X_test,y_train,y_test = train_test_split(X,y,test_size=0.3,random_state= 42)
-print(X_train.shape)
-print(X_test.shape)
-print(y_train.shape)
-print(y_test.shape)
-
-### Scaling the splitted dataset 
-
-Scalar = MinMaxScaler()
-X_train = Scalar.fit_transform(X_train)
-X_test = Scalar.fit_transform(X_test)
-### LogisticRegression
-Model_LR = LogisticRegression()
-Model_LR.fit(X_train,y_train)
-
-y_pred_LR = Model_LR.predict(X_test)
-accuracy = accuracy_score(y_test,y_pred_LR)
-Confusion_LR = confusion_matrix(y_test,y_pred_LR)
-
-print(Confusion_LR)
-print(accuracy)
+Problem type: Classification     
 
 
-### Decision Tree
-Model_DT = DecisionTreeClassifier()
-Model_DT.fit(X_train,y_train)
+## Model fitting
 
-y_pred_DT = Model_DT.predict(X_test)
-accuracy_DT = accuracy_score(y_test,y_pred_DT)
-Confusion_DT = confusion_matrix(y_test,y_pred_DT)
+#### Train/Test Splitting:
+- We chose to use standard convention of 70:30 spplit for splitting the dataset into training and testing data.
 
-print(accuracy_DT)
-print(Confusion_DT)
-###  Random Forest
-Model_RF = RandomForestClassifier()
-Model_RF.fit(X_train,y_train)
+#### Model Selection: 
 
-y_pred_RF = Model_RF.predict(X_test)
-accuracy_RF = accuracy_score(y_test,y_pred_RF)
-Confusion_RF = confusion_matrix(y_test,y_pred_RF)
 
-print(accuracy_RF)
-print(Confusion_RF)
-plt.figure(figsize=(8, 6))
-sns.heatmap(Confusion_RF, annot=True, fmt='d', cmap='Blues', xticklabels=data yticklabels=data)
-plt.xlabel('Predicted Label')
-plt.ylabel('True Label')
-plt.title('Confusion Matrix')
-plt.show()
+
+## Validation / metrics
+
+- Accuracy provides a comprehensive measure of a model's overall performance across all classes. It gives a single numerical value that summarizes the correctness of predictions.
+
+Logistic Regression:
+![Confusion matrix](https://github.com/nipun-davasam/IA651-Applied-Machine-Learning/assets/151178533/882e698e-ccbc-4ab9-8ba1-f716b8614ac4)
+
+Misclassified Samples:
+![False pred](https://github.com/nipun-davasam/IA651-Applied-Machine-Learning/assets/151178533/91faa030-861c-482c-998e-e75aa88d232d)
+
+
+![Confusion matrix](https://github.com/nipun-davasam/IA651-Applied-Machine-Learning/assets/151178533/ab34d377-e7b1-4789-b9d9-65c11f72cb57)
+
+- Our model correctly predicts positives with a true positive rate of 98.3% and a false positive rate of 2.8%.
+
+## Observations:
+
+
+
+## Production
+
+Mobile applications for remote diagnosis: Mobile apps equipped with malaria detection models can enable individuals in remote or rural areas to perform self-testing for malaria using their smartphones. The app can capture images of blood smears or use rapid diagnostic tests (RDTs) to provide preliminary diagnoses, which can then be verified by healthcare professionals.
+
