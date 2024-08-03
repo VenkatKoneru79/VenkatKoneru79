@@ -98,10 +98,10 @@ We have used Logistic Regression, Random Forect, Support Vector Machine and Deci
 ![ROC Curve](https://github.com/user-attachments/assets/c2ba0c8e-4137-47de-b80e-52bb4c1ab986)
 
 ## Observations:
-Logistic Regression Accuracy: 86.97%
-Random Forest Accuracy: 
-Decision Tree Accuracy:
-SVM Accuracy: 
+- Logistic Regression Accuracy: 86.97%
+- Random Forest Accuracy: 
+- Decision Tree Accuracy:
+- SVM Accuracy: 
 
 ## Production
 This can be used for commerical purposes such as agriculture, defence, rocket launch, transportation.  
