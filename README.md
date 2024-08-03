@@ -56,41 +56,53 @@ Season (categorical): The season during which the data was recorded.
 Visibility (km) (numeric): The visibility in kilometers, including very low or very high values.
 Location (categorical): The type of location where the data was recorded.
 
-    
+![Temperature distribution](https://github.com/user-attachments/assets/47fe4f00-a262-4242-86a3-093991c44fee)
+
+
+![Cloud Cover distribution](https://github.com/user-attachments/assets/10535629-de1e-4184-a26f-aee847d4044f)
+
 Output/y: Weather Type (categorical) -> The target variable for classification, indicating the weather type.
 
+![Seasons Distribution](https://github.com/user-attachments/assets/ee15adaa-20d5-440f-9804-e03e2d091662)
+    
 Problem type: Classification     
 
+## Correlation among attributes
 
-## Model fitting
+![Correlation Matrix](https://github.com/user-attachments/assets/9f69efc5-c55a-45dc-bb5c-04b324b2c0f1)
 
 #### Train/Test Splitting:
 - We chose to use standard convention of 70:30 spplit for splitting the dataset into training and testing data.
 
 #### Model Selection: 
-
-
+We have used Logistic Regression, Random Forect, Support Vector Machine and Decision Tree to compare and contrast our observations.
 
 ## Validation / metrics
 
 - Accuracy provides a comprehensive measure of a model's overall performance across all classes. It gives a single numerical value that summarizes the correctness of predictions.
 
-Logistic Regression:
-![Confusion matrix](https://github.com/nipun-davasam/IA651-Applied-Machine-Learning/assets/151178533/882e698e-ccbc-4ab9-8ba1-f716b8614ac4)
+#### Logistic Regression :
+![confusion matrix](https://github.com/user-attachments/assets/33de5a4c-1390-4cc5-ae33-57c5f0780023)
+![Roc curve](https://github.com/user-attachments/assets/1715871a-26d3-4822-b3da-808bbd60f4c8)
 
-Misclassified Samples:
-![False pred](https://github.com/nipun-davasam/IA651-Applied-Machine-Learning/assets/151178533/91faa030-861c-482c-998e-e75aa88d232d)
+#### SVM:
+![Confusion Matrix](https://github.com/user-attachments/assets/40128a98-fc4d-4d47-847d-aa104b9b9d7e)
+![ROC Curve](https://github.com/user-attachments/assets/08b562cb-1c19-4ccb-af64-af74aab0c8e6)
 
+#### Random Forest
+![Confusion Matrix](https://github.com/user-attachments/assets/fb702d9e-6ef2-4af5-a505-4e573174323c)
+![ROC Curve](https://github.com/user-attachments/assets/16717c49-90c3-4dfc-8578-18d089eb22ae)
 
-![Confusion matrix](https://github.com/nipun-davasam/IA651-Applied-Machine-Learning/assets/151178533/ab34d377-e7b1-4789-b9d9-65c11f72cb57)
-
-- Our model correctly predicts positives with a true positive rate of 98.3% and a false positive rate of 2.8%.
+#### Decision Tree
+![Confusion Matrix](https://github.com/user-attachments/assets/b8549f11-8e11-43bd-b858-6ceb0ae1edf1)
+![ROC Curve](https://github.com/user-attachments/assets/c2ba0c8e-4137-47de-b80e-52bb4c1ab986)
 
 ## Observations:
-
-
+Logistic Regression Accuracy: 86.97%
+Random Forest Accuracy: 
+Decision Tree Accuracy:
+SVM Accuracy: 
 
 ## Production
-
-Mobile applications for remote diagnosis: Mobile apps equipped with malaria detection models can enable individuals in remote or rural areas to perform self-testing for malaria using their smartphones. The app can capture images of blood smears or use rapid diagnostic tests (RDTs) to provide preliminary diagnoses, which can then be verified by healthcare professionals.
+This can be used for commerical purposes such as agriculture, defence, rocket launch, transportation.  
 
