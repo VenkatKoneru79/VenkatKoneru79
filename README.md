@@ -99,9 +99,9 @@ We have used Logistic Regression, Random Forect, Support Vector Machine and Deci
 
 ## Observations:
 - Logistic Regression Accuracy: 86.97%
-- Random Forest Accuracy: 
-- Decision Tree Accuracy:
-- SVM Accuracy: 
+- Random Forest Accuracy: 91.31 %
+- Decision Tree Accuracy: 90.96%
+- SVM Accuracy: 90%
 
 ## Production
 This can be used for commerical purposes such as agriculture, defence, rocket launch, transportation.  
